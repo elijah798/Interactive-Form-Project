@@ -14,7 +14,44 @@ const colorSelect = document.getElementById('color');
 const colors = colorSelect.children;
 const theme = document.getElementById('design');
 const allThemes = theme.children;
-let chosenTheme;
+//let chosenTheme;
+const activities = document.querySelector('.activities');
+const checkboxInput = activities.querySelectorAll(`input[type="checkbox"]`);
+const ccNum = document.querySelector('#cc-num');
+const zip = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
+const paymentMethod = document.querySelector('#payment').value;
+const name = document.querySelector('#name');
+
+//creates functions to validate individual inputs
+let ccNumValid = () => {
+    if (/^\d{13,16}$/.test(ccNum.value) == false) {
+        return false;
+    } else {
+        return true;
+    }
+}
+let zipValid = () => {
+    if (/^\d{5}$/.test(zip.value) == false) {
+        return false;
+    } else {
+        return true;
+    }
+}
+let cvvValid = () => {
+    if (/^\d{3}$/.test(cvv.value) == false) {
+        return false;
+    } else {
+        return true;
+    }
+}
+let mailValid = () => {
+    if (/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/.test(mail.value) == false) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 //event listener to display other_role element when other is selected value
 titles.addEventListener('change', (e) => {
@@ -147,9 +184,7 @@ document.querySelector('#basicInfo').addEventListener('input', (e) => {
     }
 })
 
-const ccNum = document.querySelector('#cc-num');
-const zip = document.querySelector('#zip');
-const cvv = document.querySelector('#cvv');
+
 
 //event listener for credit card fields 
 document.querySelector('#credit-card').addEventListener('input', (e) => {
@@ -162,19 +197,19 @@ document.querySelector('#credit-card').addEventListener('input', (e) => {
         const submit = document.querySelector('form');
         e.preventDefault();
 
-        if (/^\d{13,16}$/.test(ccNum.value) == true) {
+        if (ccNumValid() == true) {
             ccNum.style.color = 'black';
         } else {
             ccNum.style.color = 'red'
                 // ccNum.disabled = true;
         }
-        if (/^\d{5}$/.test(zip.value) == true) {
+        if (zipValid() == true) {
             zip.style.color = 'black';
         } else {
             zip.style.color = 'red'
 
         }
-        if (/^\d{3}$/.test(cvv.value) == true) {
+        if (cvvValid == true) {
 
             cvv.style.color = 'black';
         } else {
@@ -194,8 +229,6 @@ function checkOptions() {
     for (let i = 0; i < checkboxInput.length; i++) {
         if (checkboxInput[i].checked == true) {
             return true;
-
-
         }
     }
     return false;
@@ -203,46 +236,46 @@ function checkOptions() {
 
 //function that validates form.
 function validateForm() {
-    //declaration of necessary variables.
-    const activities = document.querySelector('.activities');
-    const checkboxInput = activities.querySelectorAll(`input[type="checkbox"]`);
-
-    const paymentMethod = document.querySelector('#payment').value;
-    const name = document.querySelector('#name');
     //if statement to check if the credit card payment method is selected.
     if (paymentMethod == 'credit card') {
         //if statement that checks if the number entered is correct.
-        if (/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/.test(mail.value) == false || /^\d{13,16}$/.test(ccNum.value) == true || /^\d{5}$/.test(zip.value) == true || /^\d{3}$/.test(cvv.value) == true || checkOptions() == false || name.value == '') {
+        if (mailValid() == false || ccNumValid() == false || zipValid() == false || cvvValid() == false || checkOptions() == false || name.value == '') {
             if (name.value == '') {
                 name.style.borderColor = 'red';
                 window.scrollTo(0, 0);
 
             }
+
             if (checkOptions() == false) {
                 activities.parentElement.style.borderStyle = 'solid';
                 activities.parentElement.style.borderColor = 'red';
                 activities.parentElement.style.borderColor = 'red';
-
-
             }
-            if (ccNum.style.color == 'red') {
+
+            if (ccNumValid() == false) {
                 ccNum.style.borderColor = 'red';
             }
-            if (zip.style.color == 'red') {
+
+            if (zipValid() == false) {
                 zip.style.borderColor = 'red';
             }
-            if (cvv.style.color == 'red') {
+
+            if (cvvValid() == false) {
                 cvv.style.borderColor = 'red';
             }
-            return false;
-        } else if (/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/.test(mail.value) == true && ccNum.style.color != 'red' && zip.style.color != 'red' && cvv.style.color != 'red' && checkOptions() == true && name.value != '') {
 
+            if (mailValid() == false) {
+                mail.style.borderColor = 'red';
+            }
+
+            return false;
+        } else if (mailValid() == true && ccNumValid() == true && zipValid == true && cvvValid() == true && checkOptions() == true && name.value != '') {
             return true;
         }
         //if its not a credit card it checks inputs and submits
     } else {
 
-        if (/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/.test(mail.value) == false || checkOptions() == false || name.value == '') {
+        if (mailValid() == false || checkOptions() == false || name.value == '') {
             if (name.value == '') {
                 name.style.borderColor = 'red';
                 window.scrollTo(0, 0);
@@ -255,17 +288,12 @@ function validateForm() {
 
 
             }
-            if (ccNum.style.color == 'red') {
-                ccNum.style.borderColor = 'red';
-            }
-            if (zip.style.color == 'red') {
-                zip.style.borderColor = 'red';
-            }
-            if (cvv.style.color == 'red') {
-                cvv.style.borderColor = 'red';
+
+            if (mailValid() == false) {
+                mail.style.borderColor = 'red';
             }
             return false;
-        } else if (/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/.test(mail.value) == true && checkOptions() == true && name.value != '') {
+        } else if (mailValid() == true && checkOptions() == true && name.value != '') {
 
             return true;
         }
