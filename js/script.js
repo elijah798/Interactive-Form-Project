@@ -68,29 +68,38 @@ for (let i = 0; i < colors.length; i++) {
     colors[i].style.display = 'none';
 }
 
+const colorDiv = document.getElementById('colors-js-puns')
+colorDiv.style.display = 'none';
 //event listener to see if a theme is selected to display t-shirt types
 theme.addEventListener('change', (e) => {
+
 
     if (theme.options[theme.selectedIndex].value != allThemes[0].value) {
         for (let i = 0; i < colors.length; i++) {
             colors[i].style.display = '';
+            colorDiv.style.display = '';
         }
         allThemes[0].style.display = 'none'
+        colorDiv.style.display = 'none';
     }
     if (theme.options[theme.selectedIndex].value === 'js puns') {
         for (let i = 3; i < colors.length; i++) {
             colors[i].style.display = 'none';
+            colorDiv.style.display = 'none';
         }
         for (let i = 0; i < 4; i++) {
             colors[i].style.display = '';
+            colorDiv.style.display = '';
         }
     }
     if (theme.options[theme.selectedIndex].value === 'heart js') {
         for (let i = 0; i < 4; i++) {
             colors[i].style.display = 'none';
+            colorDiv.style.display = 'none';
         }
         for (let i = 4; i < colors.length; i++) {
             colors[i].style.display = '';
+            colorDiv.style.display = '';
         }
     }
 
@@ -299,7 +308,16 @@ function validateForm() {
                 console.log('adding element');
             }
 
-            if (mailValid() == false) {
+            if (mail.value == '') {
+                mail.style.borderColor = 'red';
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Email field empty';
+                console.log('editing element');
+                mail.parentElement.appendChild(err);
+                console.log('adding element');
+            } else if (mailValid() == false) {
                 mail.style.borderColor = 'red';
                 console.log('creating element');
                 let err = document.createElement('span');
