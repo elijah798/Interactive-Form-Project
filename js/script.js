@@ -107,12 +107,12 @@ document.querySelector('.activities').addEventListener('change', (e) => {
     //if statement that adds to the price dependendant on which activity is chosen.
     if (e.target.checked == true) {
         let r = e.target.parentElement.textContent.split('$');
-        currentPrice.textContent = (sum += parseInt(r[1]));
+        currentPrice.textContent = '$' + (sum += parseInt(r[1]));
 
         // else if statement that subtracts to the price dependendant on which activity is chosen.
     } else if (e.target.checked == false && sum != 0) {
         let r = e.target.parentElement.textContent.split('$');
-        currentPrice.textContent = (sum -= parseInt(r[1]));
+        currentPrice.textContent = '$' + (sum -= parseInt(r[1]));
 
     }
 
@@ -193,8 +193,6 @@ document.querySelector('#credit-card').addEventListener('input', (e) => {
     //using regex to check if inputed value matches correct formating
     if (paymentMethod == 'credit card') {
 
-
-        const submit = document.querySelector('form');
         e.preventDefault();
 
         if (ccNumValid() == true) {
@@ -209,8 +207,7 @@ document.querySelector('#credit-card').addEventListener('input', (e) => {
             zip.style.color = 'red'
 
         }
-        if (cvvValid == true) {
-
+        if (cvvValid() == true) {
             cvv.style.color = 'black';
         } else {
             cvv.style.color = 'red'
@@ -234,8 +231,12 @@ function checkOptions() {
     return false;
 }
 
+
 //function that validates form.
 function validateForm() {
+    const paymentMethod = document.querySelector('#payment').value;
+
+
     //if statement to check if the credit card payment method is selected.
     if (paymentMethod == 'credit card') {
         //if statement that checks if the number entered is correct.
@@ -243,6 +244,13 @@ function validateForm() {
             if (name.value == '') {
                 name.style.borderColor = 'red';
                 window.scrollTo(0, 0);
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please enter a name.';
+                console.log('editing element');
+                name.parentElement.insertBefore(err, name.nextSibling);
+                console.log('adding element');
 
             }
 
@@ -250,22 +258,56 @@ function validateForm() {
                 activities.parentElement.style.borderStyle = 'solid';
                 activities.parentElement.style.borderColor = 'red';
                 activities.parentElement.style.borderColor = 'red';
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please select atleast one event';
+                console.log('editing element');
+                activities.parentElement.insertBefore(err, activities.nextSibling);
+                console.log('adding element');
             }
 
             if (ccNumValid() == false) {
                 ccNum.style.borderColor = 'red';
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please enter a valid Credit Card Number.';
+                console.log('editing element');
+                ccNum.parentElement.appendChild(err);
+                console.log('adding element');
             }
 
             if (zipValid() == false) {
                 zip.style.borderColor = 'red';
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please enter a valid zip code.';
+                console.log('editing element');
+                zip.parentElement.appendChild(err);
+                console.log('adding element');
             }
 
             if (cvvValid() == false) {
                 cvv.style.borderColor = 'red';
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please enter a valid cvv Number.';
+                console.log('editing element');
+                cvv.parentElement.appendChild(err);
+                console.log('adding element');
             }
 
             if (mailValid() == false) {
                 mail.style.borderColor = 'red';
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please enter a valid Email Address.';
+                console.log('editing element');
+                mail.parentElement.appendChild(err);
+                console.log('adding element');
             }
 
             return false;
@@ -279,18 +321,22 @@ function validateForm() {
             if (name.value == '') {
                 name.style.borderColor = 'red';
                 window.scrollTo(0, 0);
-
             }
             if (checkOptions() == false) {
                 activities.parentElement.style.borderStyle = 'solid';
                 activities.parentElement.style.borderColor = 'red';
                 activities.parentElement.style.borderColor = 'red';
-
-
             }
 
             if (mailValid() == false) {
                 mail.style.borderColor = 'red';
+                console.log('creating element');
+                let err = document.createElement('span');
+                err.style.color = 'red';
+                err.textContent = 'Please enter a valid Email Address.';
+                console.log('editing element');
+                mail.parentElement.appendChild(err);
+                console.log('adding element');
             }
             return false;
         } else if (mailValid() == true && checkOptions() == true && name.value != '') {
